@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from decouple import config
+import requests
 import pyodbc
 
 
@@ -40,4 +41,13 @@ else:
             # eg: [{'name':'milk','code':'M23','price':19.90,'stock':10}]
             results.append(dict(zip(columns, row)))
 
-        print(results)
+        # Send query results as POST request to the API endpoint if query returns results
+        if results:
+            response = requests.post(f"{config('ENDPOINT')}", json=results)
+            print(response.status_code)
+            print(response.json())
+        else:
+            print("No results")
+
+        # Close MSSQL connection
+        conn.close()
