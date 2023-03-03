@@ -28,6 +28,6 @@ pip install -r requirements.txt
 Run project:
 
 ```bash
-python script.py
+python script.pyw
 ```
 
